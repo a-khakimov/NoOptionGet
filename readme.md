@@ -1,7 +1,3 @@
-# Scalafix rules for NoOptionGet
+# Custom Scalafix rules
 
-To develop rule:
-```
-sbt ~tests/test
-# edit rules/src/main/scala/fix/NoOptionGet.scala
-```
+## NoOptionGet
