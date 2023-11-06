@@ -5,17 +5,15 @@ lazy val scala3Version = "3.3.0"
 
 inThisBuild(
   List(
-    organization := "com.ainr",
-    homepage := Some(url("https://github.com/com/example")),
-    licenses := List(
-      "Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")
-    ),
+    organization := "org.ainr",
+    homepage := Some(url("https://github.com/ainr/pravila")),
+    licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
     developers := List(
       Developer(
         "a-khakimov",
         "Ainur Khakimov",
-        "example@email.com",
-        url("https://example.com")
+        "techlinked@yandex.ru",
+        url("https://github.com/ainr/pravila")
       )
     ),
     semanticdbEnabled := true,
@@ -23,7 +21,7 @@ inThisBuild(
   )
 )
 
-lazy val NoOptionGet = (project in file("."))
+lazy val pravila = (project in file("."))
   .aggregate(
     rules.projectRefs ++
       input.projectRefs ++
@@ -36,7 +34,7 @@ lazy val NoOptionGet = (project in file("."))
 
 lazy val rules = projectMatrix
   .settings(
-    moduleName := "scalafix",
+    moduleName := "pravila",
     libraryDependencies += "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion
   )
   .defaultAxes(VirtualAxis.jvm)
