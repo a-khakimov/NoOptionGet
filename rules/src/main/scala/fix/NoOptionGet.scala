@@ -7,10 +7,17 @@ class NoOptionGet extends SemanticRule("NoOptionGet") {
 
   override def fix(implicit doc: SemanticDocument): Patch = {
     doc.tree.collect {
-      case t@Term.Select(extractor: Term, name: Term.Name) if name.value == "get" &&
-        extractor.symbol.info.get.signature.toString.contains("Option[") =>
-        println(s"--> ${extractor.symbol.info.get.signature.toString}")
-        Patch.lint(Diagnostic("", "Option.get is not allowed", t.pos))
+      case t@Term.Select(extractor: Term, name: Term.Name) if name.value == "get"
+        && extractor.symbol.info
+                    .map(info => (info.displayName, info.signature.toString))
+                    .exists { case (name, signature) =>
+        name.contains("Option") ||
+          name.contains("Some") ||
+          name.contains("None") ||
+          signature.contains("Option[") ||
+          signature.contains("Some[") ||
+          signature.contains("None")
+      } => Patch.lint(Diagnostic("", "Option.get is not allowed", t.pos))
     }.asPatch
   }
 }
