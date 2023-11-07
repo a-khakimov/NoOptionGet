@@ -7,12 +7,12 @@ class NoHead extends SemanticRule("NoHead") {
 
   override def fix(implicit doc: SemanticDocument): Patch = {
     doc.tree.collect {
-      case t@Term.Select(extractor: Term, name: Term.Name) if name.value == "head"
-        && checkFor(extractor, "List") => Patch.lint(Diagnostic("", "List.head is not allowed", t.pos))
-      case t@Term.Select(extractor: Term, name: Term.Name) if name.value == "head"
-        && checkFor(extractor, "Seq") => Patch.lint(Diagnostic("", "Seq.head is not allowed", t.pos))
-      case t@Term.Select(extractor: Term, name: Term.Name) if name.value == "head"
-        && checkFor(extractor, "Set") => Patch.lint(Diagnostic("", "Set.head is not allowed", t.pos))
+      case t@Term.Select(extractor: Term, Term.Name("head"))
+        if checkFor(extractor, "List") => Patch.lint(Diagnostic("", "List.head is not allowed", t.pos))
+      case t@Term.Select(extractor: Term, Term.Name("head"))
+        if checkFor(extractor, "Seq") => Patch.lint(Diagnostic("", "Seq.head is not allowed", t.pos))
+      case t@Term.Select(extractor: Term, Term.Name("head"))
+        if checkFor(extractor, "Set") => Patch.lint(Diagnostic("", "Set.head is not allowed", t.pos))
     }.asPatch
   }
 
