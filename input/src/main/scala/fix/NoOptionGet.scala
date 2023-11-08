@@ -3,6 +3,8 @@ rule = NoOptionGet
 */
 package fix
 
+import scala.language.higherKinds
+
 object NoOptionGet {
   val option: Option[Int] = Some(42)
   option.get /* assert: NoOptionGet
@@ -36,4 +38,11 @@ object NoOptionGet {
   ^^^^^^^^
   Option.get is not allowed
   */
+
+  case class Test[F[_], T](value: T) {
+    def get = 42
+  }
+
+  val test = Test[Option, (Int, Option[String])]((42, Option("Foo")))
+  test.get
 }

@@ -20,7 +20,8 @@ class NoHead extends SemanticRule("NoHead") {
     extractor.symbol.info
       .map(info => (info.displayName, info.signature.toString))
       .exists { case (name, signature) =>
-        name.contains(tpe) || name.contains("Nil") || signature.contains(s"$tpe[")
+        name.startsWith(tpe) || name.contains("Nil") ||
+          signature.startsWith(s": $tpe[") || signature.startsWith(s"$tpe[")
       }
   }
 }

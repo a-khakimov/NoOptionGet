@@ -41,4 +41,12 @@ class NoHead {
   ^^^^^^^^
   Seq.head is not allowed
   */
+
+  case class NonEmptyList[T](head: T, tail: List[T])
+  val nel = NonEmptyList[Int](42, Nil)
+  nel.head
+  nel.tail.head /* assert: NoHead
+  ^^^^^^^^^^^^^
+  List.head is not allowed
+  */
 }
