@@ -5,8 +5,8 @@ package fix
 
 class NoMapApply {
 
-  Map.empty.apply(42) /* assert: NoMapApply
-  ^^^^^^^^^^^^^^^
+  Map.empty[Int, String].apply(42) /* assert: NoMapApply
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   Map.apply is not allowed
   */
 
@@ -26,4 +26,11 @@ class NoMapApply {
   ^^^^^^^^
   Map.apply is not allowed
   */
+
+  case class ConcurrentMap[Key, Value](key: Key, value: Value) {
+    def apply(key: Key): Value = value
+  }
+
+  val cm = ConcurrentMap[Int, String](42, "Foo")
+  cm(42)
 }

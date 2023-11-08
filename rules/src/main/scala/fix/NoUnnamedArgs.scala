@@ -15,7 +15,7 @@ case class NoUnnamedArgs(config: NoUnnamedArgsConfig) extends SemanticRule("NoUn
       case Term.Apply.After_4_6_0(fun, args) =>
         val parameters = getParameters(fun.symbol)
         if (parameters.size > config.minUnnamedArgs) {
-          args.zip(parameters).map {
+          args.values.zip(parameters).map {
             case (arg, name) if !arg.symbol.info.exists(_.isParameter) =>
               Patch.lint(Diagnostic("", s"Unnamed arguments is not allowed - $name", arg.pos))
             case _ => Patch.empty
@@ -35,7 +35,7 @@ case class NoUnnamedArgs(config: NoUnnamedArgsConfig) extends SemanticRule("NoUn
   private def getParameters(symbol: Symbol)(implicit doc: SemanticDocument): List[String] = {
     symbol.info.map(_.signature) match {
       case Some(MethodSignature(_, parameters, _)) =>
-        parameters.flatten.map(_.displayName)
+        parameters.flatten.filterNot(_.isImplicit).map(_.displayName)
       case _ => Nil
     }
   }

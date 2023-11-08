@@ -41,4 +41,19 @@ class MakeArgsNamed {
   f.foo2(List(1, 2, 3), "See")
 
   make_args_named.Bar("Baz", Nil)
+
+  def moo(bar: Int, baz: String, lee: List[Long], see: String, pil: Int)(implicit rom: Int, bom: String): Unit = { }
+  implicit val rom: Int = 42
+  implicit val bom: String = "Bom"
+  moo(42, baz = "Baz", List(1, 2, 3), "See", 73)
+
+  def hoo(
+    bar: Int, baz: String, lee: List[Long], see: String, pil: Int
+  )(
+    rom: Int, bom: String
+  )(implicit vaa: Long): Unit = { }
+
+  implicit val vaa: Long = 100
+
+  moo(42, "Baz", List(1, 2, 3), "See", 73)(55, "bom")
 }

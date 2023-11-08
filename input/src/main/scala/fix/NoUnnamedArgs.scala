@@ -49,4 +49,11 @@ class NoUnnamedArgs {
   f.foo2(List(1, 2, 3), "See")
 
   no_unnamed_args.Bar("Baz", Nil)
+
+  def moo(bar: Int, baz: String, lee: List[Long], see: String, pil: Int)(implicit rom: Int, bom: String): Unit = { }
+
+  implicit val rom: Int = 100
+  implicit val bom: String = "100"
+
+  moo(42, "Baz", List(1, 2, 3), "See", 73)
 }
