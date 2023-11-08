@@ -2,3 +2,4 @@ fix.MakeArgsNamed
 fix.NoHead
 fix.NoMapApply
 fix.NoOptionGet
+fix.NoUnnamedArgs

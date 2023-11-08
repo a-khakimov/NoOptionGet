@@ -6,30 +6,30 @@ import scalafix.v1._
 
 import scala.meta._
 
-case class MakeArgsNamed(config: MakeArgsNamedConfig) extends SemanticRule("MakeArgsNamed") {
+case class NoUnnamedArgs(config: NoUnnamedArgsConfig) extends SemanticRule("NoUnnamedArgs") {
 
-  def this() = this(MakeArgsNamedConfig.default)
+  def this() = this(NoUnnamedArgsConfig.default)
 
   override def fix(implicit doc: SemanticDocument): Patch = {
     doc.tree.collect {
       case Term.Apply.After_4_6_0(fun, args) =>
         val parameters = getParameters(fun.symbol)
-        if (parameters.size > config.minArgs) {
+        if (parameters.size > config.minUnnamedArgs) {
           args.zip(parameters).map {
             case (arg, name) if !arg.symbol.info.exists(_.isParameter) =>
-              Patch.addLeft(arg, s"$name = ")
+              Patch.lint(Diagnostic("", s"Unnamed arguments is not allowed - $name", arg.pos))
             case _ => Patch.empty
           }
         } else Nil
     }
   }.flatten.asPatch
 
-  import MakeArgsNamedConfig.decoder
+  import NoUnnamedArgsConfig.decoder
 
   override def withConfiguration(config: Configuration): Configured[Rule] = {
-    config.conf.getOrElse("MakeArgsNamed")(
-      MakeArgsNamedConfig.default
-    ).map(MakeArgsNamed)
+    config.conf.getOrElse("NoUnnamedArgs")(
+      NoUnnamedArgsConfig.default
+    ).map(NoUnnamedArgs)
   }
 
   private def getParameters(symbol: Symbol)(implicit doc: SemanticDocument): List[String] = {
@@ -41,14 +41,15 @@ case class MakeArgsNamed(config: MakeArgsNamedConfig) extends SemanticRule("Make
   }
 }
 
-case class MakeArgsNamedConfig(minArgs: Int)
+case class NoUnnamedArgsConfig(minUnnamedArgs: Int)
 
-object MakeArgsNamedConfig {
-  val default: MakeArgsNamedConfig = MakeArgsNamedConfig(5)
+object NoUnnamedArgsConfig {
+  val default: NoUnnamedArgsConfig = NoUnnamedArgsConfig(5)
 
-  implicit val surface: Surface[MakeArgsNamedConfig] =
-    metaconfig.generic.deriveSurface[MakeArgsNamedConfig]
+  implicit val surface: Surface[NoUnnamedArgsConfig] =
+    metaconfig.generic.deriveSurface[NoUnnamedArgsConfig]
 
-  implicit val decoder: ConfDecoder[MakeArgsNamedConfig] =
+  implicit val decoder: ConfDecoder[NoUnnamedArgsConfig] =
     metaconfig.generic.deriveDecoder(default)
 }
+
