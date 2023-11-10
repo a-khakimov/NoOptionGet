@@ -42,15 +42,15 @@ class MakeArgsNamed {
   def moo(bar: Int, baz: String, lee: List[Long], see: String, pil: Int)(implicit rom: Int, bom: String): Unit = { }
   implicit val rom: Int = 42
   implicit val bom: String = "Bom"
-  moo(bar = 42, baz = "Baz", lee = List(1, 2, 3), see = "See", pil = 73)
+  moo(42, baz = "Baz", List(1, 2, 3), "See", 73)
 
   def hoo(
-    bar: Int, baz: String, lee: List[Long], see: String, pil: Int
+    bar: Int, baz: String, lee: List[Long], see: String, pil: Int, mel: make_args_named.Foo
   )(
     rom: Int, bom: String
   )(implicit vaa: Long): Unit = { }
 
   implicit val vaa: Long = 100
 
-  moo(bar = 42, baz = "Baz", lee = List(1, 2, 3), see = "See", pil = 73)(rom = 55, bom = "bom") // todo: fix it!
+  hoo(bar = 42, baz = "Baz", lee = List(1, 2, 3), see = "See", pil = 73, mel = f)(55, "bom")
 }
