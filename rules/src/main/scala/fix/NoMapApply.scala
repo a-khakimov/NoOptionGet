@@ -26,6 +26,4 @@ class NoMapApply extends SemanticRule("NoMapApply") {
         } => patch(t.pos)
     }.asPatch
   }
-
-  private val forbidden = "Map" :: "Map[" :: Nil
 }

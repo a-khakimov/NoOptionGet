@@ -1,4 +1,5 @@
 fix.MakeArgsNamed
+fix.NoGeneralException
 fix.NoHead
 fix.NoMapApply
 fix.NoOptionGet
