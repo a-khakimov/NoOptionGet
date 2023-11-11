@@ -12,7 +12,7 @@ case class MakeArgsNamed(config: MakeArgsNamedConfig) extends SemanticRule("Make
 
   override def fix(implicit doc: SemanticDocument): Patch = {
     doc.tree.collect {
-      case Term.Apply.After_4_6_0(fun, args) =>
+      case fun @ Term.Apply.After_4_6_0(_, args) =>
         getParameters(fun.symbol).get(args.size).map {
           parameters => if (parameters.size > config.minArgs) {
             args.values.zip(parameters).map {
@@ -37,7 +37,18 @@ case class MakeArgsNamed(config: MakeArgsNamedConfig) extends SemanticRule("Make
   private def getParameters(symbol: Symbol)(implicit doc: SemanticDocument): Map[Int, List[String]] = {
     symbol.info.map(_.signature) match {
       case Some(MethodSignature(_, parameters, _)) =>
-        parameters.map(p => p.size -> p.map(_.displayName)).toMap
+        parameters
+          .map(params => params.size -> params.map(_.displayName))
+          .toMap
+      case Some(ClassSignature(_, _, _, declarations)) =>
+        declarations
+          .filterNot(decl => decl.isConstructor && decl.isPrimary)
+          .map(_.signature match {
+            case MethodSignature(_, parameters :: _, _) => parameters.map(_.displayName)
+            case _ => Nil
+          })
+          .map(params => params.size -> params)
+          .toMap
       case _ => Map.empty
     }
   }

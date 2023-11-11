@@ -22,8 +22,9 @@ package make_args_named {
     }
   }
 
-  case class Bar(baz: String, lee: List[Long])
+  case class Bar(bar: Int, baz: String, lee: List[Long], see: String, pil: Int, rom: Int)(gaa: Int)
 
+  class Bak(bar: Int, baz: String, lee: List[Long], see: String, pil: Int, rom: Int)(gaa: Int)
 }
 
 class MakeArgsNamed {
@@ -40,8 +41,6 @@ class MakeArgsNamed {
 
   f.foo2(List(1, 2, 3), "See")
 
-  make_args_named.Bar("Baz", Nil)
-
   def moo(bar: Int, baz: String, lee: List[Long], see: String, pil: Int)(implicit rom: Int, bom: String): Unit = { }
   implicit val rom: Int = 42
   implicit val bom: String = "Bom"
@@ -56,4 +55,8 @@ class MakeArgsNamed {
   implicit val vaa: Long = 100
 
   hoo(42, "Baz", List(1, 2, 3), "See", 73, f)(55, "bom")
+
+  make_args_named.Bar(42, "Baz", List(1, 2, 3), "See", 73, 100)(200)
+
+  new make_args_named.Bak(42, "Baz", List(1, 2, 3), "See", 73, 100)(200)
 }
