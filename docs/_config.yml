@@ -1,0 +1,23 @@
+title: Pravila
+description: Scalafix rules
+logo: https://github.com/a-khakimov/pravila/raw/master/docs/assets/img/logo.png
+remote_theme: BDHU/minimalist
+favicon: true
+color-scheme: light
+show_downloads: false
+
+plugins:
+  - jekyll-redirect-from
+  - jekyll-remote-theme
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+
+relative_links:
+  enabled: true
+  collections: false
+
+sidebar:
+  - name: Project on GitHub
+    icon: <i class="fa-brands fa-github"></i>
+    link: https://github.com/a-khakimov/pravila

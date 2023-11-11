@@ -5,7 +5,7 @@ lazy val scala3Version = "3.3.0"
 
 inThisBuild(
   List(
-    organization := "org.ainr",
+    organization := "com.github.ainr",
     homepage := Some(url("https://github.com/ainr/pravila")),
     licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
     developers := List(
@@ -17,7 +17,8 @@ inThisBuild(
       )
     ),
     semanticdbEnabled := true,
-    semanticdbVersion := scalafixSemanticdb.revision
+    semanticdbVersion := scalafixSemanticdb.revision,
+    crossScalaVersions := List(V.scala213, V.scala212)
   )
 )
 
