@@ -3,9 +3,12 @@ lazy val V = _root_.scalafix.sbt.BuildInfo
 lazy val rulesCrossVersions = Seq(V.scala213, V.scala212)
 lazy val scala3Version = "3.3.0"
 
+ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
+sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
+
 inThisBuild(
   List(
-    organization := "com.github.ainr",
+    organization := "io.github.a-khakimov",
     homepage := Some(url("https://github.com/ainr/pravila")),
     licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
     developers := List(
