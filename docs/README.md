@@ -2,6 +2,8 @@
 
 This library contains [Scalafix](https://scalacenter.github.io/scalafix) rules for the code linting and rewriting. These rules help to correct common errors and bring the code to style conventions.
 
+---
+
 ## Linting rules
 
 ### NoGeneralException
@@ -18,6 +20,8 @@ error: [NoGeneralException] Exception is not allowed
 */
 ```
 
+---
+
 ### NoHead
 
 This rule prohibits the use of `head` on collections in order to avoid a `NoSuchElementException`.
@@ -31,6 +35,8 @@ error: [NoHead] List.head is not allowed
     ^^^^^^^^^^^^^^^^^^
  */
 ```
+
+---
 
 ### NoMapApply
 
@@ -47,6 +53,8 @@ map(1)
  */
 ```
 
+---
+
 ### NoOptionGet
 
 This rule prohibits the use of the `get` method on `Option` to avoid a `NoSuchElementException`.
@@ -59,6 +67,8 @@ val value = myOption.get
 [error]               ^^^^^^^^^^^^
  */
 ```
+
+---
 
 ### NoUnnamedArgs
 
@@ -80,7 +90,13 @@ function("Word", 42, 73.1)
  */
 ```
 
-## Refactoring rules
+#### Configuration
+
+- `NoUnnamedArgs.minArgs` (default 5) - the rule will skip functions that have fewer arguments than this value
+
+---
+
+## Rewrite rules
 
 ### MakeArgsNamed
 
@@ -96,3 +112,9 @@ Became:
 ```scala
 foo(number = 10, word = "bar")
 ```
+
+#### Configuration
+
+- `MakeArgsNamed.minArgs` (default 5) - the rule will skip functions that have fewer arguments than this value
+
+---
