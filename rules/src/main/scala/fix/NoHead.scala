@@ -5,6 +5,13 @@ import scala.meta._
 
 class NoHead extends SemanticRule("NoHead") {
 
+  override def isLinter: Boolean = true
+
+  override def description: String =
+    """
+      |This rule prohibits the use of head on collections in order to avoid a NoSuchElementException.
+      |""".stripMargin
+
   override def fix(implicit doc: SemanticDocument): Patch = {
     doc.tree.collect {
       case t@Term.Select(extractor: Term, Term.Name("head"))

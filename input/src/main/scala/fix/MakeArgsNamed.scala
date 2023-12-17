@@ -1,5 +1,6 @@
 /*
 rule = MakeArgsNamed
+MakeArgsNamed.minArgs = 5
 */
 package fix
 

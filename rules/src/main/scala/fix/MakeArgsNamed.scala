@@ -8,6 +8,13 @@ import scala.meta._
 
 case class MakeArgsNamed(config: MakeArgsNamedConfig) extends SemanticRule("MakeArgsNamed") {
 
+  override def isRewrite: Boolean = true
+
+  override def description: String =
+    """
+      |This rule converts passing of unnamed arguments in functions to named arguments to improve readability.
+      |""".stripMargin
+
   def this() = this(MakeArgsNamedConfig.default)
 
   override def fix(implicit doc: SemanticDocument): Patch = {

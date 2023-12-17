@@ -8,13 +8,20 @@ import scala.meta._
 
 case class NoUnnamedArgs(config: NoUnnamedArgsConfig) extends SemanticRule("NoUnnamedArgs") {
 
+  override def isLinter: Boolean = true
+
+  override def description: String =
+    """
+      |This rule requires specifying arguments names when calling a function. It makes the code more readable.
+      |""".stripMargin
+
   def this() = this(NoUnnamedArgsConfig.default)
 
   override def fix(implicit doc: SemanticDocument): Patch = {
     doc.tree.collect {
       case Term.Apply.After_4_6_0(fun, args) =>
         val parameters = getParameters(fun.symbol)
-        if (parameters.size > config.minUnnamedArgs) {
+        if (parameters.size > config.minArgs) {
           args.values.zip(parameters).map {
             case (arg, name) if !arg.symbol.info.exists(_.isParameter) =>
               Patch.lint(Diagnostic("", s"Unnamed arguments is not allowed - $name", arg.pos))
@@ -41,7 +48,7 @@ case class NoUnnamedArgs(config: NoUnnamedArgsConfig) extends SemanticRule("NoUn
   }
 }
 
-case class NoUnnamedArgsConfig(minUnnamedArgs: Int)
+case class NoUnnamedArgsConfig(minArgs: Int)
 
 object NoUnnamedArgsConfig {
   val default: NoUnnamedArgsConfig = NoUnnamedArgsConfig(5)

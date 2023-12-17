@@ -7,6 +7,14 @@ import scala.meta.inputs.Position
 
 class NoMapApply extends SemanticRule("NoMapApply") {
 
+  override def isLinter: Boolean = true
+
+  override def description: String =
+    """
+      |This rule prohibits the use of apply on Map.
+      |The aim is to prevent a possible NoSuchElementException when the key is missing.
+      |""".stripMargin
+
   private def patch(pos: Position) = {
     Patch.lint(Diagnostic("", "Map.apply is not allowed", pos))
   }

@@ -1,5 +1,6 @@
 /*
 rule = NoUnnamedArgs
+NoUnnamedArgs.minArgs = 5
 */
 package fix
 

@@ -5,6 +5,13 @@ import scala.meta._
 
 class NoOptionGet extends SemanticRule("NoOptionGet") {
 
+  override def isLinter: Boolean = true
+
+  override def description: String =
+    """
+      |This rule prohibits the use of the get method on Option to avoid a NoSuchElementException.
+      |""".stripMargin
+
   override def fix(implicit doc: SemanticDocument): Patch = {
     doc.tree.collect {
       case t@Term.Select(extractor: Term, Term.Name("get")) if extractor.symbol.info
