@@ -9,7 +9,7 @@ import scala.meta._
 case class MakeArgsNamed(config: MakeArgsNamedConfig) extends SemanticRule("MakeArgsNamed") {
 
   override def isRewrite: Boolean = true
-
+  override def isExperimental: Boolean = true
   override def description: String =
     """
       |This rule converts passing of unnamed arguments in functions to named arguments to improve readability.

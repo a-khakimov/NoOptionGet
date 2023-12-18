@@ -98,7 +98,7 @@ function("Word", 42, 73.1)
 
 ## Rewrite rules
 
-### MakeArgsNamed
+### MakeArgsNamed (experimental!)
 
 This rule converts passing of unnamed arguments in functions to named arguments to improve readability.
 

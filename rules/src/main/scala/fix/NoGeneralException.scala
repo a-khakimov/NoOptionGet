@@ -41,9 +41,7 @@ object NoGeneralException {
 
   private val defaultConfig = Config(forbidden)
 
-  implicit val surface: Surface[Config] =
-    metaconfig.generic.deriveSurface[Config]
+  implicit val surface: Surface[Config] = metaconfig.generic.deriveSurface[Config]
 
-  implicit val decoder: ConfDecoder[Config] =
-    metaconfig.generic.deriveDecoder(defaultConfig)
+  implicit val decoder: ConfDecoder[Config] = metaconfig.generic.deriveDecoder(defaultConfig)
 }
