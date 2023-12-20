@@ -20,6 +20,51 @@ error: [NoGeneralException] Exception is not allowed
 */
 ```
 
+#### Configuration
+
+- `NoGeneralException.forbidden` - list of forbidden exception types (default `Exception` and  `Throwable`)
+
+---
+
+### NoUnnamedArgs
+
+This rule requires specifying arguments names when calling a function. It makes the code more readable.
+
+
+```scala
+function("Word", 42, 73.1)
+/*
+[error] ... error: [NoUnnamedArgs] Unnamed arguments is not allowed - word
+[error]   function("Word", 42, 73.1)
+[error]            ^^^^^^
+[error] ... error: [NoUnnamedArgs] Unnamed arguments is not allowed - number
+[error]   function("Word", 42, 73.1)
+[error]                    ^^
+[error] ... error: [NoUnnamedArgs] Unnamed arguments is not allowed - double
+[error]   function("Word", 42, 73.1)
+[error]                        ^^^^
+ */
+```
+
+#### Configuration
+
+- `NoUnnamedArgs.minArgs` (default 5) - the rule will skip functions that have fewer arguments than this value
+
+---
+
+### NoOptionGet
+
+This rule prohibits the use of the `get` method on `Option` to avoid a `NoSuchElementException`.
+
+```scala
+val value = myOption.get
+/*
+[error] ... error: [NoOptionGet] Option.get is not allowed
+[error]   val value = myOption.get
+[error]               ^^^^^^^^^^^^
+ */
+```
+
 ---
 
 ### NoHead
@@ -52,47 +97,6 @@ map(1)
 [error] ^^^^^^
  */
 ```
-
----
-
-### NoOptionGet
-
-This rule prohibits the use of the `get` method on `Option` to avoid a `NoSuchElementException`.
-
-```scala
-val value = myOption.get
-/*
-[error] ... error: [NoOptionGet] Option.get is not allowed
-[error]   val value = myOption.get
-[error]               ^^^^^^^^^^^^
- */
-```
-
----
-
-### NoUnnamedArgs
-
-This rule requires specifying arguments names when calling a function. It makes the code more readable.
-
-
-```scala
-function("Word", 42, 73.1)
-/*
-[error] ... error: [NoUnnamedArgs] Unnamed arguments is not allowed - word
-[error]   function("Word", 42, 73.1)
-[error]            ^^^^^^
-[error] ... error: [NoUnnamedArgs] Unnamed arguments is not allowed - number
-[error]   function("Word", 42, 73.1)
-[error]                    ^^
-[error] ... error: [NoUnnamedArgs] Unnamed arguments is not allowed - double
-[error]   function("Word", 42, 73.1)
-[error]                        ^^^^
- */
-```
-
-#### Configuration
-
-- `NoUnnamedArgs.minArgs` (default 5) - the rule will skip functions that have fewer arguments than this value
 
 ---
 
