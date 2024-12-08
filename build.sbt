@@ -1,6 +1,6 @@
 lazy val V = _root_.scalafix.sbt.BuildInfo
 
-lazy val rulesCrossVersions = Seq(V.scala213, V.scala212)
+lazy val rulesCrossVersions = Seq(V.scala213)
 lazy val scala3Version = "3.3.0"
 
 ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
@@ -21,7 +21,7 @@ inThisBuild(
     ),
     semanticdbEnabled := true,
     semanticdbVersion := scalafixSemanticdb.revision,
-    crossScalaVersions := List(V.scala213, V.scala212)
+    crossScalaVersions := List(V.scala213)
   )
 )
 
@@ -86,18 +86,13 @@ lazy val tests = projectMatrix
     rulesCrossVersions.map(VirtualAxis.scalaABIVersion) :+ VirtualAxis.jvm: _*
   )
   .jvmPlatform(
-    scalaVersions = Seq(V.scala212),
+    scalaVersions = Seq(V.scala213),
     axisValues = Seq(TargetAxis(scala3Version)),
     settings = Seq()
   )
   .jvmPlatform(
     scalaVersions = Seq(V.scala213),
     axisValues = Seq(TargetAxis(V.scala213)),
-    settings = Seq()
-  )
-  .jvmPlatform(
-    scalaVersions = Seq(V.scala212),
-    axisValues = Seq(TargetAxis(V.scala212)),
     settings = Seq()
   )
   .dependsOn(rules)
