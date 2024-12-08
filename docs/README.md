@@ -30,7 +30,6 @@ error: [NoGeneralException] Exception is not allowed
 
 This rule requires specifying arguments names when calling a function. It makes the code more readable.
 
-
 ```scala
 function("Word", 42, 73.1)
 /*
@@ -95,6 +94,26 @@ map(1)
 [error] ... error:[NoMapApply] Map.apply is not allowed
 [error] map(1)
 [error] ^^^^^^
+ */
+```
+
+---
+
+### NoRecursion
+
+This rule prohibits the use of recursive calls
+
+```scala
+object Main {
+  def foo(): Unit = bar()
+  def bar(): Unit = baz()
+  def baz(): Unit = foo()
+}
+
+/*
+[error] main.scala:4:21: error: [NoRecursion.DetectedRecursion] Recursion detected: Main.bar() -> Main.baz() -> Main.foo()
+[error]   def foo(): Unit = bar()
+[error]                     ^^^^^
  */
 ```
 
